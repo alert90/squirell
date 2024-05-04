@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Simulation</title>
+
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+
+    <!-- Fiber and Networking Simulation CSS -->
+    <style>
+        body {
+            background: linear-gradient(#4CAF50, #4CAF50, #3F51B5, #3F51B5, #F44336, #F44336, #FFEB3B, #FFEB3B, #607D8B, #607D8B); /* Fiber and TCP/UDP colors */
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #212121; /* Dark grey */
+            transform: translateY(-100%);
+            transition: transform 0.3s;
+            z-index: 1000;
+            border: none;
+        }
+        body:hover .navbar {
+            transform: translateY(0);
+        }
+        .navbar:not(:hover) {
+            transform: translateY(-100%);
+        }
+        .settings-btn {
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 8px;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+            border-radius: 0 0 0 4px;
+        }
+    </style>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+</head>
+<body>
+    <div class="navbar bg-gray-800 text-white py-2">
+        <p class="text-sm text-center">Today's Date: {{ currentDate }}</p>
+    </div>
+
+    <div id="app" class="flex h-screen">
+        <!-- Sidebar with Google Material Icons -->
+        <div class="bg-gray-800 text-white w-16 flex flex-col items-center justify-center">
+            <ul>
+                <li v-for="icon in icons" @click="navigate(icon.name)" :class="{ 'bg-gray-700': selectedIcon === icon.name }" class="my-4 p-2 cursor-pointer hover:bg-gray-700">
+                    <i class="material-icons">{{ icon.icon }}</i>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="container mx-auto py-8">
+            <div v-if="selectedIcon === 'home'" class="text-white text-center center">
+                <h1 class="text-4xl font-bold mb-8">Welcome to Network Simulation</h1>
+                <!-- Content for Home Page with Networking Simulation -->
+            </div>
+            <div v-else-if="selectedIcon === 'chat'" class="center">
+                <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md px-6 py-8">
+                    <h2 class="text-2xl font-bold mb-6 text-center">Chat Simulation</h2>
+                    <!-- Chat Simulation Content Here -->
+                </div>
+            </div>
+            <div v-else-if="selectedIcon === 'phone'" class="center">
+                <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md px-6 py-8">
+                    <h2 class="text-2xl font-bold mb-6 text-center">Voice Call Simulation</h2>
+                    <!-- Voice Call Simulation Content Here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-btn" @click="changeTheme">Settings</div>
+    </div>
+
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script>
+        // Firebase Configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAf0CIHBZ-wEQJ8CCUUWo1Wl9P7typ_ZPI",
+            authDomain: "gptcall-416910.firebaseapp.com",
+            projectId: "gptcall-416910",
+            storageBucket: "gptcall-416910.appspot.com",
+            messagingSenderId: "99275526699",
+            appId: "1:99275526699:web:3b623e1e2996108b52106e"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        const auth = firebase.auth();
+
+        new Vue({
+            el: '#app',
+            data: {
+                currentDate: new Date().toDateString(),
+                selectedIcon: 'home',
+                icons: [
+                    { name: 'home', icon: 'home' },
+                    { name: 'chat', icon: 'chat' },
+                    { name: 'phone', icon: 'phone' }
+                ]
+            },
+            methods: {
+                navigate(icon) {
+                    this.selectedIcon = icon;
+                },
+                changeTheme() {
+                    // Change theme colors here
+                    // You can add logic to change the theme colors on button click
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
